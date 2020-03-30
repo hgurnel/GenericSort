@@ -3,7 +3,7 @@
 #include <iostream>
 #include <algorithm>
 
-template <typename T, int size>
+template <typename T, size_t size>
 class ArrayHG
 {
 private:
