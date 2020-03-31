@@ -5,8 +5,8 @@ using namespace std;
 
 int main()
 {
-    int myArr[5] = {1, 2, 3, 4, 5};
-    Array<int> a(myArr, 5);
-    a.print();
+    int myArr[8] = {7, 5, 4, 3, 2, 1, 0, 6};
+    Array<int> a(myArr, 8);
+    
     return 0;
 }
