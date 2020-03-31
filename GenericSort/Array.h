@@ -44,6 +44,38 @@ public:
         m_arr[a] = m_arr[b];
         m_arr[b] = tmp;
     }
+
+    void quickSort(size_t first, size_t last)
+    {
+        if (first < last) // Check if there are at least two elements in the array
+        {
+            size_t j = partition(first, last);
+            quickSort(first, j);
+            quickSort(j+1, last);
+        }
+    }
+
+    size_t partition(size_t first, size_t last)
+    {
+        T pivot = m_arr[first];
+        size_t i = first;
+        size_t j = last;
+
+        while (i < j)
+        {
+            while (m_arr[i] <= pivot)
+                i++;
+
+            while (m_arr[j] > pivot)
+                j--;
+
+            if (i < j)
+                swap(i, j);
+        }
+
+        swap(first, j);
+        return j;
+    }
 };
 
 #endif // !_ARRAY_H
