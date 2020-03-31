@@ -38,11 +38,11 @@ public:
             std::cout << m_arr[i] << std::endl;
     }
 
-    void swap(T arr[], size_t a, size_t b)
+    void swap(size_t a, size_t b)
     {
-        T tmp = arr[a];
-        arr[a] = arr[b];
-        arr[b] = tmp;
+        T tmp = m_arr[a];
+        m_arr[a] = m_arr[b];
+        m_arr[b] = tmp;
     }
 };
 
