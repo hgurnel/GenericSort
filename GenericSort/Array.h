@@ -27,12 +27,12 @@ public:
         delete[] m_arr;
     }
 
-    T& operator[](size_t index)
+    T& operator[](size_t index) const
     {
         return m_arr[index];
     }
 
-    void print()
+    void print() const
     {
         for (size_t i = 0; i < m_size; ++i)
             std::cout << m_arr[i] << std::endl;
