@@ -17,8 +17,8 @@ public:
     {
         m_size = size;
         m_arr = new T[size];
-        //for (auto i : m_arr)
-        //    m_arr[i] = arr[i];
+        for (size_t i=0; i<size; ++i)
+            m_arr[i] = arr[i];
     }
 
     // Dtor
@@ -34,7 +34,8 @@ public:
 
     void print()
     {
-        std::for_each(std::begin(m_arr), std::end(m_arr), std::cout);
+        for (size_t i = 0; i < m_size; ++i)
+            std::cout << m_arr[i] << std::endl;
     }
 
     void swap(T arr[], size_t a, size_t b)
