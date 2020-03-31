@@ -1,4 +1,5 @@
-#pragma once
+#ifndef _ARRAY_H
+#define _ARRAY_H
 
 #include <iostream>
 #include <algorithm>
@@ -16,8 +17,8 @@ public:
     {
         m_size = size;
         m_arr = new T[size];
-        for (auto i : m_arr)
-            m_arr[i] = arr[i];
+        //for (auto i : m_arr)
+        //    m_arr[i] = arr[i];
     }
 
     // Dtor
@@ -26,7 +27,7 @@ public:
         delete[] m_arr;
     }
 
-    T & operator[](size_t index)
+    T& operator[](size_t index)
     {
         return m_arr[index];
     }
@@ -36,7 +37,7 @@ public:
         std::for_each(std::begin(m_arr), std::end(m_arr), std::cout);
     }
 
-    void swap(T arr[] , size_t a, size_t b)
+    void swap(T arr[], size_t a, size_t b)
     {
         T tmp = arr[a];
         arr[a] = arr[b];
@@ -44,3 +45,4 @@ public:
     }
 };
 
+#endif // !_ARRAY_H
