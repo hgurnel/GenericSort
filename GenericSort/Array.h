@@ -45,18 +45,24 @@ public:
         m_arr[b] = tmp;
     }
 
+    ///// QUICK SORT /////
+
     void quickSort(size_t first, size_t last)
     {
-        if (first < last) // Check if there are at least two elements in the array
+        if (first < last) // Recursion stopping condition: when only one element in partition, ie first = last
         {
+            // Get pivot index, ie its sorted location 
             size_t j = partition(first, last);
+            // Sort array part located left to pivot
             quickSort(first, j);
+            // Sort array part located right to pivot
             quickSort(j+1, last);
         }
     }
 
     size_t partition(size_t first, size_t last)
     {
+        // Pivot arbitrarily chosen as first element of partition
         T pivot = m_arr[first];
         size_t i = first;
         size_t j = last;
@@ -75,6 +81,56 @@ public:
 
         swap(first, j);
         return j;
+    }
+
+    ///// MERGE SORT /////
+
+    void mergeSort(size_t first, size_t last)
+    {
+        if (first < last)
+        {
+            size_t middle = (first + last) / 2;
+            mergeSort(first, middle);
+            mergeSort(middle + 1, last);
+            merge(first, middle, last);
+        }
+    }
+
+    void merge(size_t first, size_t middle, size_t last)
+    {
+        T* tmp = new T[last - first + 1];
+        size_t i = first, j = middle + 1, k = 0;
+
+        while (i <= middle && j <= last)
+        {
+            if (m_arr[i] <= m_arr[j])
+            {
+                tmp[k] = m_arr[i];
+                ++k; ++i;
+            }
+            else
+            {
+                tmp[k] = m_arr[j];
+                ++k; ++j;
+            }
+        }
+
+        while (i <= middle)
+        {
+            tmp[k] = m_arr[i];
+            ++k; ++i;
+        }
+
+        while (j <= last)
+        {
+            tmp[k] = m_arr[j];
+            ++k; ++j;
+        }
+
+        for (i = first; i <= last; ++i)
+        {
+            m_arr[i] = tmp[i - first];
+        }
     }
 };
 
