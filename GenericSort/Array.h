@@ -45,7 +45,13 @@ public:
         m_arr[b] = tmp;
     }
 
-    ///// QUICK SORT /////
+    ///// BUBBLE SORT, O(n^2)
+
+    ///// SELECTION SORT, O(n^2) /////
+
+    ///// BUCKET SORT, O(n+m), n = nb items and m = nb distinct items ///// 
+
+    ///// QUICK SORT, O(n log(n)) expected, O(n^2) worst case /////
 
     void quickSort(size_t first, size_t last)
     {
@@ -83,7 +89,7 @@ public:
         return j;
     }
 
-    ///// MERGE SORT /////
+    ///// MERGE SORT, O(n log(n)) expected and worst case /////
 
     void mergeSort(size_t first, size_t last)
     {
