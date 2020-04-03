@@ -9,5 +9,6 @@ int main()
     Array<int> a(myArr, 9);
     a.mergeSort(0,8);
     a.print();
+    a.~Array();
     return 0;
 }
