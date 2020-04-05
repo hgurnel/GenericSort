@@ -60,11 +60,11 @@ public:
         // Put m_arr elements in the different buckets 
         for (size_t i = 0; i < m_size; ++i)
         {
-            size_t bucketId = m_size * m_arr[i]; // Index in bucket 
-            buckets[bucketId].push_back(m_arr[i]); // Creates a list of elements at bucketId, that have similar values
+            size_t bucketId = m_size * m_arr[i]; // Which bucket for which element of the array
+            buckets[bucketId].push_back(m_arr[i]);
         }
 
-        // Sort individual buckets 
+        // Sort each bucket 
         for (size_t i = 0; i < m_size; ++i)
             std::sort(buckets[i].begin(), buckets[i].end());
 
