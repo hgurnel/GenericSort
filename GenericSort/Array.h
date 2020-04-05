@@ -3,6 +3,7 @@
 
 #include <iostream>
 #include <algorithm>
+#include <vector>
 
 template <typename T>
 class Array
@@ -49,7 +50,30 @@ public:
 
     ///// SELECTION SORT, O(n^2) /////
 
-    ///// BUCKET SORT, O(n+m), n = nb items and m = nb distinct items ///// 
+    ///// BUCKET SORT, O(n) /////
+
+    void bucketSort()
+    {
+        // Create m_size empty buckets 
+        std::vector<std::vector<T>> buckets(m_size);
+
+        // Put m_arr elements in the different buckets 
+        for (size_t i = 0; i < m_size; ++i)
+        {
+            size_t bucketId = m_size * m_arr[i]; // Index in bucket 
+            buckets[bucketId].push_back(m_arr[i]); // Creates a list of elements at bucketId, that have similar values
+        }
+
+        // Sort individual buckets 
+        for (size_t i = 0; i < m_size; ++i)
+            std::sort(buckets[i].begin(), buckets[i].end());
+
+        // Concatenate all buckets into m_arr[] 
+        size_t index = 0;
+        for (size_t i = 0; i < m_size; ++i)
+            for (size_t j = 0; j < buckets[i].size(); ++j)
+                m_arr[index++] = buckets[i][j];
+    }
 
     ///// QUICK SORT, O(n log(n)) expected, O(n^2) worst case /////
 
