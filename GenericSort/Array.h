@@ -50,6 +50,15 @@ public:
 
     ///// BUBBLE SORT, O(n^2)
 
+    void bubbleSort()
+    {
+        int i, j;
+        for (i = 0; i < m_size - 1; ++i) 
+            for (j = 0; j < m_size - i - 1; ++j)
+                if (m_arr[j] > m_arr[j + 1])
+                    swap(j, j + 1);
+    }
+
     ///// SELECTION SORT, O(n^2) /////
 
     void selectionSort()
