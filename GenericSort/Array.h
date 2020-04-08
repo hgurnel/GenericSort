@@ -11,6 +11,8 @@ class Array
 private:
     T* m_arr;
     size_t m_size;
+    // For bucket sort
+    const size_t m_nbBuckets = 4;
 
 public:
     // Ctor
@@ -54,25 +56,65 @@ public:
 
     void bucketSort()
     {
-        // Create m_size empty buckets 
-        std::vector<std::vector<T>> buckets(m_size);
+        // Get min of array
+        T min = *std::min_element(m_arr, m_arr + m_size);
 
-        // Put m_arr elements in the different buckets 
+        // Offset: make min become 0, either by shifting the array by +|min| or -|min|
+        if (min < 0)
+        {
+            for (size_t i = 0; i < m_size; i++)
+            {
+                m_arr[i] += std::abs(min);
+            }
+        }
+        else
+        {
+            for (size_t i = 0; i < m_size; i++)
+            {
+                m_arr[i] -= std::abs(min);
+            }
+        }
+
+        // Get max of array
+        T max = *std::max_element(m_arr, m_arr + m_size);
+
+        // Create a vector of empty buckets 
+        std::vector<std::vector<T>> buckets(m_nbBuckets);
+
+        // Place each element of the array in its corresponding bucket
         for (size_t i = 0; i < m_size; ++i)
         {
-            size_t bucketId = m_size * m_arr[i]; // Which bucket for which element of the array
-            buckets[bucketId].push_back(m_arr[i]);
+            size_t index = (m_arr[i] / max) * (m_nbBuckets - 1);
+            buckets[index].push_back(m_arr[i]);
         }
 
         // Sort each bucket 
-        for (size_t i = 0; i < m_size; ++i)
+        for (size_t i = 0; i < m_nbBuckets; i++)
             std::sort(buckets[i].begin(), buckets[i].end());
 
-        // Concatenate all buckets into m_arr[] 
-        size_t index = 0;
-        for (size_t i = 0; i < m_size; ++i)
-            for (size_t j = 0; j < buckets[i].size(); ++j)
-                m_arr[index++] = buckets[i][j];
+        // Remove offset from array, which was added at the beginning
+        if (min < 0)
+        {
+            for (size_t i = 0; i < m_nbBuckets; i++)
+            {
+                for(size_t j = 0; j < buckets[i].size(); j++)
+                    buckets[i][j] -= std::abs(min);
+            }
+        }
+        else
+        {
+            for (size_t i = 0; i < m_nbBuckets; i++)
+            {
+                for (size_t j = 0; j < buckets[i].size(); j++)
+                    buckets[i][j] += std::abs(min);
+            }
+        }
+
+        // Concatenate all buckets into m_arr
+        size_t id = 0;
+        for (size_t i = 0; i < m_nbBuckets; i++)
+            for (size_t j = 0; j < buckets[i].size(); j++)
+                m_arr[id++] = buckets[i][j];
     }
 
     ///// QUICK SORT, O(n log(n)) expected, O(n^2) worst case /////
