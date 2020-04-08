@@ -62,14 +62,14 @@ public:
         // Offset: make min become 0, either by shifting the array by +|min| or -|min|
         if (min < 0)
         {
-            for (size_t i = 0; i < m_size; i++)
+            for (size_t i = 0; i < m_size; ++i)
             {
                 m_arr[i] += std::abs(min);
             }
         }
         else
         {
-            for (size_t i = 0; i < m_size; i++)
+            for (size_t i = 0; i < m_size; ++i)
             {
                 m_arr[i] -= std::abs(min);
             }
@@ -89,31 +89,31 @@ public:
         }
 
         // Sort each bucket 
-        for (size_t i = 0; i < m_nbBuckets; i++)
+        for (size_t i = 0; i < m_nbBuckets; ++i)
             std::sort(buckets[i].begin(), buckets[i].end());
 
         // Remove offset from array, which was added at the beginning
         if (min < 0)
         {
-            for (size_t i = 0; i < m_nbBuckets; i++)
+            for (size_t i = 0; i < m_nbBuckets; ++i)
             {
-                for(size_t j = 0; j < buckets[i].size(); j++)
+                for(size_t j = 0; j < buckets[i].size(); ++j)
                     buckets[i][j] -= std::abs(min);
             }
         }
         else
         {
-            for (size_t i = 0; i < m_nbBuckets; i++)
+            for (size_t i = 0; i < m_nbBuckets; ++i)
             {
-                for (size_t j = 0; j < buckets[i].size(); j++)
+                for (size_t j = 0; j < buckets[i].size(); ++j)
                     buckets[i][j] += std::abs(min);
             }
         }
 
         // Concatenate all buckets into m_arr
         size_t id = 0;
-        for (size_t i = 0; i < m_nbBuckets; i++)
-            for (size_t j = 0; j < buckets[i].size(); j++)
+        for (size_t i = 0; i < m_nbBuckets; ++i)
+            for (size_t j = 0; j < buckets[i].size(); ++j)
                 m_arr[id++] = buckets[i][j];
     }
 
