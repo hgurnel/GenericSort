@@ -52,6 +52,24 @@ public:
 
     ///// SELECTION SORT, O(n^2) /////
 
+    void selectionSort()
+    {
+        int i, j, min_idx;
+
+        // Move through unsorted part of the array
+        for (i = 0; i < m_size - 1; ++i)
+        {
+            // Find minimum element 
+            min_idx = i;
+            for (j = i + 1; j < m_size; ++j)
+                if (m_arr[j] < m_arr[min_idx])
+                    min_idx = j;
+
+            // Swap minimum element with first element of unsorted part of the array  
+            swap(min_idx, i);
+        }
+    }
+
     ///// BUCKET SORT, O(n) /////
 
     void bucketSort()
