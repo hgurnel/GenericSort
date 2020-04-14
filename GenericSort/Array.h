@@ -50,6 +50,8 @@ public:
 
     ///// BUBBLE SORT, O(n^2)
 
+    /*Browse array and everytime a greater element is found at j+1, swap it with
+    the current one at j*/
     void bubbleSort()
     {
         int i, j;
@@ -61,26 +63,43 @@ public:
 
     ///// SELECTION SORT, O(n^2) /////
 
+    /*The array is divided in two parts: the sorted part, on the left, and the 
+    unsorted part, on the right. At first, the sorted part does not exist, so
+    an index "i=0" is defined to browse the array element by element. At each
+    iteration, the algorithm looks for the index of the lowest element of the 
+    array, located right to i. This index is denoted by minId. Its corresponding
+    element is then swapped with array[i].*/
     void selectionSort()
     {
-        int i, j, min_idx;
+        int i, j, minId;
 
-        // Move through unsorted part of the array
+        // Move within unsorted part of the array
         for (i = 0; i < m_size - 1; ++i)
         {
-            // Find minimum element 
-            min_idx = i;
+            // Find index of minimal element 
+            minId = i;
             for (j = i + 1; j < m_size; ++j)
-                if (m_arr[j] < m_arr[min_idx])
-                    min_idx = j;
+                if (m_arr[j] < m_arr[minId])
+                    minId = j;
 
             // Swap minimum element with first element of unsorted part of the array  
-            swap(min_idx, i);
+            swap(minId, i);
         }
     }
 
     ///// BUCKET SORT, O(n) /////
 
+    /*This sorting algorithm is adapted to arrays whose elements belong to a 
+    range of values (positive or negative, decimal or integer values). The
+    idea is to create "buckets", each covering a fraction of this range. 
+    The elements of the array are then placed in their corresponding bucket.
+    Each bucket is sorted and finally all the buckets are merged, to produce
+    the final sorted array. Here, to deal with negative and positive numbers,
+    the algorithm starts by applying an offset to the array, in order to bring
+    its minimum to zero. A vector of empty buckets is then created, to host the
+    elements of the array. The buckets are sorted, the offset is removed, to 
+    get back in the original range of values, and the buckets are merged, to 
+    produce the final array.*/
     void bucketSort()
     {
         // Get min of array
@@ -146,9 +165,18 @@ public:
 
     ///// QUICK SORT, O(n log(n)) expected, O(n^2) worst case /////
 
+    /*This algorithm works by defining a partition, ie finding the sorted 
+    position of a pivot element. A sorted position for the pivot corresponds
+    to the index for which all the elements of the array located left to the
+    pivot are lower than the pivot, while all those located right to it are greater. 
+    A partition corresponds to the sorted position of the pivot and the two parts of 
+    the array: left to the pivot and right of the pivot. Once a partition has been 
+    obtained, the left and right part are sorted individually, using quick sort, 
+    iteratively*/
     void quickSort(size_t first, size_t last)
     {
-        if (first < last) // Recursion stopping condition: when only one element in partition, ie first = last
+        // Recursion stopping condition: when paritition has only one element
+        if (first < last)
         {
             // Get pivot index, ie its sorted location 
             size_t j = partition(first, last);
@@ -159,6 +187,19 @@ public:
         }
     }
 
+    /* The functions takes a partition as an input. It is either the full array
+    or a fraction of it, defined by the "first" and "last" indexes. The function
+    builds a new partition by placing the elements smaller than the pivot on its
+    left and those that are greater on its right. It returns the sorted position
+    of the pivot, whose initial position is arbitrarily chosen as first element 
+    of the input partition. 
+    To find this sorted position, two cursors i and j are defined. i is used to 
+    browse the input partition from the start, while j is used to browse it from 
+    its end. Everytime an element partition[i] is found greater than pivot, and an 
+    element partition[j] is found smaller than pivot, those two are swapped, to end 
+    up in the right part of the partition. When i and j are about to intersect, j 
+    corresponds to the sorted position of the pivot. Thus, the pivot is placed there,
+    by swapping the first element of the partition with partition[j].*/
     size_t partition(size_t first, size_t last)
     {
         // Pivot arbitrarily chosen as first element of partition
@@ -178,14 +219,23 @@ public:
                 swap(i, j);
         }
 
+        // Place the pivot at its sorted position, ie j
         swap(first, j);
+
+        // Return the sorted position of the pivot
         return j;
     }
 
     ///// MERGE SORT, O(n log(n)) expected and worst case /////
 
+    /*This algorithms splits the array into two, by defining a middle element.
+    The algorithm is then applied recursively to the left and right parts 
+    separately, in order to further split the array into smaller ones. Once 
+    splitting is done, the partitions are merged (and so sorted) to produce the
+    final array.*/
     void mergeSort(size_t first, size_t last)
     {
+        // Condition used to check is the array has at least two elements
         if (first < last)
         {
             size_t middle = (first + last) / 2;
@@ -195,6 +245,12 @@ public:
         }
     }
 
+    /* This function considers two subarrays within the input array,
+    the left part and the right part. It also creates a third array, "tmp", which
+    will host the result of the merging operation. 
+    At each iteration, one element from the left part and one from the right part 
+    are compared. The lowest one is added to tmp. 
+    At the end, the content of tmp is copied into m_arr.*/
     void merge(size_t first, size_t middle, size_t last)
     {
         T* tmp = new T[last - first + 1];
