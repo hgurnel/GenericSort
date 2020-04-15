@@ -253,7 +253,8 @@ public:
     At the end, the content of tmp is copied into m_arr.*/
     void merge(size_t first, size_t middle, size_t last)
     {
-        T* tmp = new T[last - first + 1];
+        size_t inputArraySize = last - first + 1;
+        T* tmp = new T[inputArraySize];
         size_t i = first, j = middle + 1, k = 0;
 
         while (i <= middle && j <= last)
